@@ -1,7 +1,7 @@
 FROM ghcr.io/linuxserver/baseimage-alpine:3.14
 
-# set version label
 LABEL maintainer="edifus"
+LABEL org.opencontainers.image.source https://github.com/edifus/docker-seedbox-containers
 
 # environment
 ENV GOPATH="/go" \

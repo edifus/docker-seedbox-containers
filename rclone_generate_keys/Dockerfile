@@ -11,6 +11,9 @@ RUN go get github.com/rclone/rclone/fs/config/obscure && \
 
 FROM alpine
 
+LABEL maintainer="edifus"
+LABEL org.opencontainers.image.source https://github.com/edifus/docker-seedbox-containers
+
 COPY --from=build /app/obscure .
 COPY rclone_generate_keys/run.sh .
 

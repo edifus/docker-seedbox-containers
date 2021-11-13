@@ -1,5 +1,8 @@
 FROM ghcr.io/linuxserver/radarr
 
+LABEL maintainer="edifus"
+LABEL org.opencontainers.image.source https://github.com/edifus/docker-seedbox-containers
+
 COPY radarr/40-symlink-logs /etc/cont-init.d/
 COPY healthcheck-mount /etc/cont-init.d/00-healthcheck-mount
 COPY healthcheck-web /etc/sbin/
