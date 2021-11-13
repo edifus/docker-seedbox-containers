@@ -24,11 +24,6 @@ runs:
   steps:
     - name: Inject slug/short variables
       uses: rlespinasse/github-slug-action@v3.x
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v1.10.0
-      with:
-        username: ${{ inputs.ghcr_username }}
-        password: ${{ inputs.ghcr_password }}
 
     - name: Login to Github Packages
       uses: docker/login-action@v1
