@@ -22,6 +22,9 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Add SHORT_SHA env property with commit short sha
+      run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
     - name: Login to Github Packages
       uses: docker/login-action@v1
       with:
@@ -43,7 +46,7 @@ runs:
         push: true
         tags: |
           ${{ inputs.image }}:latest
-          ${{ inputs.image }}:${{ env.GITHUB_SHA_SHORT }}
+          ${{ inputs.image }}:${{ env.SHORT_SHA }}
 #        cache-from: "${{ inputs.image }}:${{ env.GITHUB_REF_SLUG_URL == inputs.latest_tag_branch && 'latest' || env.GITHUB_REF_SLUG_URL }}"
 
 
