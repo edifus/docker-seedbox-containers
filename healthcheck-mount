@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bash
+set -xe
+
+MountPoint=${MountPoint:-"/seedbox/merged"}
+
+grep -qs "${MountPoint} " /proc/mounts || exit 1

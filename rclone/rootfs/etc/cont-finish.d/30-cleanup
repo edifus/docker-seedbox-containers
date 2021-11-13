@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv sh
+
+fusermount -uz $MountPoint || true
+umount $MountPoint || true
+rm -r $MountPoint

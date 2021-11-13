@@ -1,0 +1,28 @@
+
+[gdrive_${count}]
+type = drive
+scope = drive
+use_trash = false
+server_side_across_configs = true
+chunk_size = 128M
+acknowledge_abuse = true
+pacer_min_sleep = 1ms
+pacer_burst = 5000
+team_drive = ${rclone_team_drive_id}
+service_account_file = /service_accounts/rclone_default.json
+
+[gdrive_upload_crypt_${count}]
+type = crypt
+remote = gdrive_${count}:/${rclone_gdrive_mount_folder}
+filename_encryption = standard
+directory_name_encryption = true
+password = ${rclone_encryption_password1}
+password2 = ${rclone_encryption_password2}
+
+[gdrive_mount_crypt_${count}]
+type = crypt
+remote = gdrive_${count}:/${rclone_gdrive_mount_folder}
+filename_encryption = standard
+directory_name_encryption = true
+password = ${rclone_encryption_password1}
+password2 = ${rclone_encryption_password2}

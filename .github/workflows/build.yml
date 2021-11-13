@@ -1,0 +1,75 @@
+name: Build containers
+
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  cancel_redundant:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.6.0
+        with:
+          access_token: ${{ github.token }}
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        group:
+#          - image: "edifus/bazarr"
+#            dockerfile: "bazarr/Dockerfile"
+
+          - image: "edifus/gcloud_init"
+            dockerfile: "gcloud_init/Dockerfile"
+
+          - image: "edifus/radarr"
+            dockerfile: "radarr/Dockerfile"
+
+          - image: "edifus/rclone"
+            dockerfile: "rclone/Dockerfile"
+
+          - image: "edifus/rclone_generate_keys"
+            dockerfile: "rclone_generate_keys/Dockerfile"
+
+          - image: "edifus/sonarr"
+            dockerfile: "sonarr/Dockerfile"
+
+#          - image: "edifus/traktarr"
+#            dockerfile: "traktarr/Dockerfile"
+
+#          - image: "edifus/headphones"
+#            dockerfile: "headphones.Dockerfile"
+
+#          - image: "edifus/lazylibrarian"
+#            dockerfile: "lazylibrarian.Dockerfile"
+
+#          - image: "edifus/medusa"
+#            dockerfile: "medusa.Dockerfile"
+
+#          - image: "edifus/mylar"
+#            dockerfile: "mylar.Dockerfile"
+
+#          - image: "edifus/nzbhydra2"
+#            dockerfile: "nzbhydra2.Dockerfile"
+
+#          - image: "edifus/sabnzbd"
+#            dockerfile: "sabnzbd.Dockerfile"
+
+#          - image: "edifus/transmission"
+#            dockerfile: "transmission.Dockerfile"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build ${{ matrix.group.image }}
+        uses: ./.github/actions/build-and-push-container
+        with:
+#          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          ghcr_password: ${{ secrets.GHCR_PAT }}
+          dockerfile: ${{ matrix.group.dockerfile }}
+          image: ${{ matrix.group.image }}

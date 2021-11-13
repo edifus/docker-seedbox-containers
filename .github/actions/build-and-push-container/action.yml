@@ -1,0 +1,62 @@
+inputs:
+  ghcr_username:
+    description: GHCR username
+    default: ${{ github.actor }}
+  ghcr_password:
+    description: GHCR token
+    required: true
+#  dockerhub_username:
+#    description: Docker Hub username
+#    default: ${{ github.actor }}
+#  dockerhub_password:
+#    description: Docker Hub token
+#    required: true
+  dockerfile:
+    description: Path to dockerfile
+    default: inputs.context/Dockerfile
+  context:
+    description: Dockerfile context
+    default: .
+  image:
+    description: Image name
+    required: true
+  latest_tag_branch:
+    description: What branch should be labelled as the 'latest' tag?
+    default: main
+
+
+runs:
+  using: composite
+  steps:
+      - name: Login to Github Packages
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ inputs.ghcr_username }}
+          password: ${{ inputs.ghcr_password }}
+
+#    - name: Inject slug/short variables
+#      uses: rlespinasse/github-slug-action@v3.x
+#    - name: Log in to Docker Hub
+#      uses: docker/login-action@v1.10.0
+#      with:
+#        dockerhub_username: ${{ inputs.dockerhub_username }}
+#        dockerhub_password: ${{ inputs.dockerhub_password }}
+
+    - uses: bluwy/substitute-string-action@v1
+      id: dockerfile
+      with:
+        _input-text: ${{ inputs.dockerfile }}
+        "inputs.context": ${{ inputs.context }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: ${{ inputs.context }}
+        file: ${{ steps.dockerfile.outputs.result }}
+        push: true
+        tags: |
+          "${{ inputs.image }}:${{ env.GITHUB_REF_SLUG_URL == inputs.latest_tag_branch && 'latest' || env.GITHUB_REF_SLUG_URL }},${{ inputs.image }}:${{ env.GITHUB_SHA_SHORT }}"
+        #cache-from: "${{ inputs.image }}:${{ env.GITHUB_REF_SLUG_URL == inputs.latest_tag_branch && 'latest' || env.GITHUB_REF_SLUG_URL }}"
+
+
