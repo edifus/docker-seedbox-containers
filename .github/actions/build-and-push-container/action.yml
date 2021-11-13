@@ -41,7 +41,7 @@ runs:
       id: dockerfile
       with:
         _input-text: ${{ inputs.dockerfile }}
-       "inputs.context": ${{ inputs.context }}
+        "inputs.context": ${{ inputs.context }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
