@@ -11,15 +11,15 @@ _echo() {
 
 _echo "Script running"
 
-_term() { 
+_term() {
   _echo "Caught SIGTERM"
   exit 0
 }
 
 trap _term SIGTERM
 
-PREFIX=Media/
-SOURCE=/seedbox/separate/$PREFIX
+PREFIX=${PREFIX:-Media/}
+SOURCE=/seedbox/separate/${PREFIX}
 
 function changeTimestamp() {
   local path

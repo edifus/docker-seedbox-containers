@@ -2,7 +2,7 @@
 
 #set -x
 
-_term() { 
+_term() {
   echo "Caught SIGTERM"
   exit 0
 }
@@ -18,4 +18,9 @@ MountCommands=$(echo ${MountCommands} | xargs echo -n)
 
 echo -e "${PREFFIX} ${Green}starting rclone mount $(date +%Y.%m.%d-%T)\n ${Yellow} /usr/bin/rclone mount $MountCommands $RemotePath $MountPoint ${Color_Off}"
 
-/usr/bin/rclone mount $MountCommands $RemotePath $MountPoint 
+RCLONE_RC_PORT=${RCLONE_PORT:-5572}
+
+/usr/bin/rclone mount --rc-addr=0.0.0.0:${RCLONE_RC_PORT} $MountCommands $RemotePath $MountPoint
+
+# only need
+/usr/bin/rclone rc vfs/refresh recursive=true --rc-addr 127.0.0.1:${RCLONE_RC_PORT} _async=true
