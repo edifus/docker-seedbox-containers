@@ -33,7 +33,7 @@ runs:
       id: dockerfile
       with:
         _input-text: ${{ inputs.dockerfile }}
-        "inputs.context": ${{ inputs.context }}
+#        "inputs.context": ${{ inputs.context }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
@@ -41,7 +41,9 @@ runs:
         context: ${{ inputs.context }}
         file: ${{ steps.dockerfile.outputs.result }}
         push: true
-        tags: "${{ inputs.image }}:${{ env.GITHUB_REF_SLUG_URL == inputs.latest_tag_branch && 'latest' || env.GITHUB_REF_SLUG_URL }},${{ inputs.image }}:${{ env.GITHUB_SHA_SHORT }}"
+        tags: |
+          ${{ inputs.image }}:latest
+          ${{ inputs.image }}:${{ env.GITHUB_SHA_SHORT }}
 #        cache-from: "${{ inputs.image }}:${{ env.GITHUB_REF_SLUG_URL == inputs.latest_tag_branch && 'latest' || env.GITHUB_REF_SLUG_URL }}"
 
 
