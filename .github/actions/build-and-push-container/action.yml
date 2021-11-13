@@ -4,7 +4,7 @@ inputs:
     default: ${{ github.repository_owner }}
   ghcr_password:
     description: GHCR token
-    default: ${{ secrets.GHCR_PAT }}
+    required: true
   dockerfile:
     description: Path to dockerfile
     default: inputs.context/Dockerfile
@@ -17,7 +17,6 @@ inputs:
   latest_tag_branch:
     description: What branch should be labelled as the 'latest' tag?
     default: main
-
 
 runs:
   using: composite
