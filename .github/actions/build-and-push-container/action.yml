@@ -22,12 +22,12 @@ inputs:
 runs:
   using: composite
   steps:
-      - name: Login to Github Packages
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ inputs.ghcr_username }}
-          password: ${{ inputs.ghcr_password }}
+    - name: Login to Github Packages
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ inputs.ghcr_username }}
+        password: ${{ inputs.ghcr_password }}
 
     - uses: bluwy/substitute-string-action@v1
       id: dockerfile

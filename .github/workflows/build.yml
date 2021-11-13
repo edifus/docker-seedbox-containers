@@ -20,9 +20,6 @@ jobs:
     strategy:
       matrix:
         group:
-#          - image: "edifus/bazarr"
-#            dockerfile: "bazarr/Dockerfile"
-
           - image: "edifus/gcloud_init"
             dockerfile: "gcloud_init/Dockerfile"
 
@@ -37,6 +34,9 @@ jobs:
 
           - image: "edifus/sonarr"
             dockerfile: "sonarr/Dockerfile"
+
+#          - image: "edifus/bazarr"
+#            dockerfile: "bazarr/Dockerfile"
 
 #          - image: "edifus/traktarr"
 #            dockerfile: "traktarr/Dockerfile"
