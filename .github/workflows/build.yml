@@ -69,7 +69,6 @@ jobs:
       - name: Build ${{ matrix.group.image }}
         uses: ./.github/actions/build-and-push-container
         with:
-#          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
           ghcr_password: ${{ secrets.GHCR_PAT }}
           dockerfile: ${{ matrix.group.dockerfile }}
           image: ${{ matrix.group.image }}
