@@ -15,7 +15,7 @@ updates:
 
   - package-ecosystem: "docker"
     directory: "/gcloud_init/"
-     schedule:
+    schedule:
       interface: "weekly"
       day: saturday
     reviewers:
@@ -23,7 +23,7 @@ updates:
 
   - package-ecosystem: "docker"
     directory: "/radarr/"
-     schedule:
+    schedule:
       interface: "weekly"
       day: saturday
     reviewers:
@@ -31,7 +31,7 @@ updates:
 
   - package-ecosystem: "docker"
     directory: "/rclone/"
-     schedule:
+    schedule:
       interface: "weekly"
       day: saturday
     reviewers:
@@ -39,7 +39,7 @@ updates:
 
   - package-ecosystem: "docker"
     directory: "/rclone_generate_keys/"
-     schedule:
+    schedule:
       interface: "weekly"
       day: saturday
     reviewers:
@@ -47,7 +47,7 @@ updates:
 
   - package-ecosystem: "docker"
     directory: "/sonarr/"
-     schedule:
+    schedule:
       interface: "weekly"
       day: saturday
     reviewers:
@@ -55,7 +55,7 @@ updates:
 
   - package-ecosystem: "docker"
     directory: "/traktarr/"
-     schedule:
+    schedule:
       interface: "weekly"
       day: saturday
     reviewers:
@@ -64,7 +64,7 @@ updates:
   # Catch-all the rest
   - package-ecosystem: "docker"
     directory: "/"
-     schedule:
+    schedule:
       interface: "weekly"
       day: saturday
     reviewers:
