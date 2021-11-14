@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+
+if [ -f /sbin/apk ]; then
+  exec /usr/sbin/crond -f -S -l 5
+fi
