@@ -8,7 +8,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/bazarr/"
     schedule:
-      interface: "weekly"
+      interval: "weekly"
       day: saturday
     reviewers:
       - "edifus"
@@ -16,7 +16,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/gcloud_init/"
     schedule:
-      interface: "weekly"
+      interval: "weekly"
       day: saturday
     reviewers:
       - "edifus"
@@ -24,7 +24,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/radarr/"
     schedule:
-      interface: "weekly"
+      interval: "weekly"
       day: saturday
     reviewers:
       - "edifus"
@@ -32,7 +32,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/rclone/"
     schedule:
-      interface: "weekly"
+      interval: "weekly"
       day: saturday
     reviewers:
       - "edifus"
@@ -40,7 +40,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/rclone_generate_keys/"
     schedule:
-      interface: "weekly"
+      interval: "weekly"
       day: saturday
     reviewers:
       - "edifus"
@@ -48,7 +48,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/sonarr/"
     schedule:
-      interface: "weekly"
+      interval: "weekly"
       day: saturday
     reviewers:
       - "edifus"
@@ -56,7 +56,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/traktarr/"
     schedule:
-      interface: "weekly"
+      interval: "weekly"
       day: saturday
     reviewers:
       - "edifus"
@@ -65,7 +65,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interface: "weekly"
+      interval: "weekly"
       day: saturday
     reviewers:
       - "edifus"
