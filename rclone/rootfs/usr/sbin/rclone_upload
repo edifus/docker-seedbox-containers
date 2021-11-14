@@ -25,8 +25,8 @@ SOURCE=/seedbox/separate/${PREFIX}
 MOUNT_LOCATION=/seedbox/merged/
 DOWNLOAD_LOCATION=downloads
 MOUNT_NAME_PREFIX=gdrive_upload_crypt_
-RCLONE_HOST="127.0.0.1"
-RCLONE_RC_PORT=${RCLONE_RC_PORT:-5572}
+RCLONE_HOST=${RCLONE_RC_ADDR%%:*}
+RCLONE_RC_PORT=${RCLONE_RC_ADDR##*:}
 
 # These two are used to dictate how many files we should attempt per upload, and
 #  the size of the batch upload, whichever is smaller.
