@@ -63,7 +63,7 @@ while true; do
         UPLOAD_LIST_SIZE_RAW=$(rclone size "${SOURCE}" | grep size)
         UPLOAD_LIST_SIZE=${UPLOAD_LIST_SIZE_RAW#Total size: }
         UPLOAD_LIST_SIZE=${UPLOAD_LIST_SIZE%(*}
-        LOG "We found a total of ${UPLOAD_LIST}_SIZE to upload."
+        LOG "We found a total of ${UPLOAD_LIST_SIZE} to upload."
         if echo "${UPLOAD_LIST}" | grep "Too large object" > /dev/null; then
             # We found a file that's bigger than our maximum size - Only upload that file.
             LOG "We found a file larger than ${SIZE_LIMIT}GB in our upload list. Uploading only that file now."
@@ -88,10 +88,10 @@ while true; do
             LOG "Uploading ${COUNT} files out of ${TOTAL_COUNT} files found to meet our ${SIZE_LIMIT}GB-per-run upload restriction."
             # Because we might be switching team drives mid-upload, we don't want to upload the same files to multiple team drives, so we limit the upload to
             #  to a certain number of files to naievely avoid mass-duplication
-            if [ "${COUNT}" -gt "${COUNT}_LIMIT" ]; then
-                UPLOAD_LIST=$(echo "${UPLOAD_LIST}" | head -n ${COUNT}_LIMIT)
-                COUNT=${COUNT}_LIMIT
-                LOG "${COUNT} is larger than our limit of ${COUNT}_LIMIT - Truncating the list to ${COUNT}_LIMIT."
+            if [ "${COUNT}" -gt "${COUNT_LIMIT}" ]; then
+                UPLOAD_LIST=$(echo "${UPLOAD_LIST}" | head -n ${COUNT_LIMIT})
+                COUNT=${COUNT_LIMIT}
+                LOG "${COUNT} is larger than our limit of ${COUNT}_LIMIT - Truncating the list to ${COUNT_LIMIT}."
                 SKIP_WAIT=1
             fi
             # Print the static list to file
@@ -210,7 +210,7 @@ while true; do
     WORK_TIME=$(expr ${END_TIME} - ${START_TIME})
     SLEEP_TIME=$(expr ${SLEEP_SECONDS} - ${WORK_TIME})
     # Sleep for a bit if we have any sleeping to do
-    if [ "$SLEEP_TIME" -gt 0 ] && [ "$SKIP_WAIT" -eq 0 ]; then
+    if [ "${SLEEP_TIME}" -gt 0 ] && [ "${SKIP_WAIT}" -eq 0 ]; then
         LOG "Sleeping for ${SLEEP_TIME}s until next upload run."
         # This fancy shenanigans allows SIGTERM to exit while we're sleeping! How cool is that?
         sleep ${SLEEP_TIME}s &
