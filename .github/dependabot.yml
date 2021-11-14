@@ -1,0 +1,56 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+
+update_configs:
+  - package-ecosystem: "docker"
+    directory: "/bazarr/"
+    update_schedule: "weekly"
+    default_reviewers:
+      - "edifus"
+
+  - package-ecosystem: "docker"
+    directory: "/gcloud_init/"
+    update_schedule: "weekly"
+    default_reviewers:
+      - "edifus"
+
+  - package-ecosystem: "docker"
+    directory: "/radarr/"
+    update_schedule: "weekly"
+    default_reviewers:
+      - "edifus"
+
+  - package-ecosystem: "docker"
+    directory: "/rclone/"
+    update_schedule: "weekly"
+    default_reviewers:
+      - "edifus"
+
+  - package-ecosystem: "docker"
+    directory: "/rclone_generate_keys/"
+    update_schedule: "weekly"
+    default_reviewers:
+      - "edifus"
+
+  - package-ecosystem: "docker"
+    directory: "/sonarr/"
+    update_schedule: "weekly"
+    default_reviewers:
+      - "edifus"
+
+  - package-ecosystem: "docker"
+    directory: "/traktarr/"
+    update_schedule: "weekly"
+    default_reviewers:
+      - "edifus"
+
+  # Catch-all the rest
+  - package-ecosystem: "docker"
+    directory: "/"
+    update_schedule: "weekly"
+    default_reviewers:
+      - "edifus"
