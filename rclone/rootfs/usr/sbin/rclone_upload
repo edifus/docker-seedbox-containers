@@ -9,6 +9,16 @@ _term() {
 
 trap _term SIGTERM
 
+if [ ! -f /config/.last-upload-finished ]; then
+    echo "$(date +%s)" > /config/.last-upload-finished
+    exit 0
+else
+    START_TIME=$(date +%s)
+    LAST_FINISH=$(cat /config/.last-upload-finished)
+    MAX_AGE="$(expr ${START_TIME} - ${LAST_FINISH})s"
+fi
+MIN_AGE=900s
+#SLEEP_SECONDS=600
 SINGLE_UPLOAD=$1
 PREFIX=${PREFIX:-Media/}
 SOURCE=/seedbox/separate/${PREFIX}
@@ -17,6 +27,7 @@ DOWNLOAD_LOCATION=downloads
 MOUNT_NAME_PREFIX=gdrive_upload_crypt_
 RCLONE_HOST="127.0.0.1"
 RCLONE_RC_PORT=${RCLONE_RC_PORT:-5572}
+
 # These two are used to dictate how many files we should attempt per upload, and
 #  the size of the batch upload, whichever is smaller.
 # Because we don't delete anything from disk until after the upload is complete, this is useful
@@ -36,19 +47,11 @@ GLOBAL_ACCOUNT_NUM=0
 TEAM_DRIVES_COUNT=$(IFS=' ';printf "%s\n" ${rclone_team_drive_ids} | wc -l)
 CURRENT_TEAM_DRIVE=0
 
-START_TIME=$(date +%s)
-if [ ! -f /config/.last-upload-finished ]; then
-    echo "$(date +%s)" > /config/.last-upload-finished
-    exit 0
-fi
-LAST_FINISH=$(cat /config/.last-upload-finished)
-MAX_AGE="$(expr ${START_TIME} - ${LAST_FINISH})s"
-MIN_AGE=900s
-#SLEEP_SECONDS=600
 
 function LOG {
     echo "[services.d] [rclone-upload]-$(s6-basename "${0}"): $1"
 }
+
 
 function DEBUG_LOG {
     if [ "${DEBUG}" ]; then
@@ -58,6 +61,7 @@ function DEBUG_LOG {
 
 
 rm ${TMP_FILE} > /dev/null 2>&1
+
 
 LOG "Starting upload service"
 SKIP_WAIT=0
@@ -97,7 +101,7 @@ if [ -d "${SOURCE}" ]; then
         if [ "${COUNT}" -gt "${COUNT_LIMIT}" ]; then
             UPLOAD_LIST=$(echo "${UPLOAD_LIST}" | head -n ${COUNT_LIMIT})
             COUNT=${COUNT_LIMIT}
-            LOG "${COUNT} is larger than our limit of ${COUNT}_LIMIT - Truncating the list to ${COUNT_LIMIT}."
+            LOG "${COUNT} is larger than our limit of ${COUNT_LIMIT} - Truncating the list to ${COUNT_LIMIT}."
             SKIP_WAIT=1
         fi
         # Print the static list to file
