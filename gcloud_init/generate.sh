@@ -11,13 +11,13 @@ PROJECT_NAME=${PROJECT_NAME:="${PROJECT_NAME_PREFIX}$(cat /dev/urandom | tr -dc 
 
 echo -e "${Yellow}******************************${C}"
 echo -e "${Green}Current configuration:"
-echo -e "${Cyan}PROJECT_NAME_PREFIX   ${Green}:${C}    ${PROJECT_NAME_PREFIX}"
-echo -e "${Cyan}PROJECT_NAME          ${Green}:${C}    ${PROJECT_NAME}"
-echo -e "${Cyan}EXPORT_LOCATION       ${Green}:${C}    ${EXPORT_LOCATION}"
-echo -e "${Cyan}SA_EMAIL_PREFIX       ${Green}:${C}    ${SA_EMAIL_PREFIX}"
-#echo -e "${Cyan}GROUP_NAME            ${Green}:${C}    ${GROUP_NAME}"
-echo -e "${Cyan}NUM_OF_SA             ${Green}:${C}    ${NUM_OF_SA}"
-echo -e "${Cyan}GROUP_EMAIL           ${Green}:${C}    ${GROUP_EMAIL}"
+echo -e "${Cyan}PROJECT_NAME_PREFIX  ${Green}:${C}    ${PROJECT_NAME_PREFIX}"
+echo -e "${Cyan}PROJECT_NAME         ${Green}:${C}    ${PROJECT_NAME}"
+echo -e "${Cyan}EXPORT_LOCATION      ${Green}:${C}    ${EXPORT_LOCATION}"
+echo -e "${Cyan}SA_EMAIL_PREFIX      ${Green}:${C}    ${SA_EMAIL_PREFIX}"
+#echo -e "${Cyan}GROUP_NAME           ${Green}:${C}    ${GROUP_NAME}"
+echo -e "${Cyan}NUM_OF_SA            ${Green}:${C}    ${NUM_OF_SA}"
+echo -e "${Cyan}GROUP_EMAIL          ${Green}:${C}    ${GROUP_EMAIL}"
 echo -e "${Yellow}******************************${C}"
 
 echo -e "${Red}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!${C}"
@@ -81,7 +81,8 @@ else
     echo -e "${Green}Google Drive api already enabled on project ${Yellow}${PROJECT_NAME}${C}"
 fi
 
-PROJECT_ID=$(gcloud projects list --filter="NAME:${PROJECT_NAME}" --format="value(projectId)")
+# Get PROJECT_ID from core.project already configured and set
+PROJECT_ID=$(gcloud config list --format="value(core.project)")
 
 echo -e "${Cyan}Project ID set to ${Yellow}${PROJECT_ID}${C}"
 

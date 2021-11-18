@@ -18,8 +18,9 @@ _term() {
 
 trap _term SIGTERM
 
-PREFIX=${PREFIX:-Media/}
-SOURCE=/seedbox/separate/${PREFIX}
+LOCAL_DATA="${LOCAL_DATA:-/seedbox/local}"
+PREFIX="${PREFIX:-Media/}"
+SOURCE="${LOCAL_DATA}/${PREFIX}"
 
 function changeTimestamp() {
   local path
