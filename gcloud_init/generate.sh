@@ -45,7 +45,7 @@ if [ -z $GROUP_EMAIL ]; then
     fi
 fi
 
-echo -e "${Cyan}Using project name ${Yellow}${PROJECT_NAME}"
+echo -e "${Cyan}Using project name ${Yellow}${PROJECT_NAME}${C}"
 
 echo -e "${Cyan}Logging into Google Cloud${C}"
 if ! gcloud auth list --format=text | grep "ACTIVE" > /dev/null; then
