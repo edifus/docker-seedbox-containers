@@ -81,7 +81,8 @@ else
     echo -e "${Green}Google Drive api already enabled on project ${Yellow}${PROJECT_NAME}${C}"
 fi
 
-PROJECT_ID=$(gcloud projects list --filter="NAME:${PROJECT_NAME}" --format="value(projectId)")
+# Get PROJECT_ID from core.project already configured and set
+PROJECT_ID=$(gcloud config list --format="value(core.project)")
 
 echo -e "${Cyan}Project ID set to ${Yellow}${PROJECT_ID}${C}"
 
