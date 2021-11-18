@@ -11,13 +11,13 @@ PROJECT_NAME=${PROJECT_NAME:="${PROJECT_NAME_PREFIX}$(cat /dev/urandom | tr -dc 
 
 echo -e "${Yellow}******************************${C}"
 echo -e "${Green}Current configuration:"
-echo -e "${Cyan}PROJECT_NAME_PREFIX   ${Green}:${C}    ${PROJECT_NAME_PREFIX}"
-echo -e "${Cyan}PROJECT_NAME          ${Green}:${C}    ${PROJECT_NAME}"
-echo -e "${Cyan}EXPORT_LOCATION       ${Green}:${C}    ${EXPORT_LOCATION}"
-echo -e "${Cyan}SA_EMAIL_PREFIX       ${Green}:${C}    ${SA_EMAIL_PREFIX}"
-#echo -e "${Cyan}GROUP_NAME            ${Green}:${C}    ${GROUP_NAME}"
-echo -e "${Cyan}NUM_OF_SA             ${Green}:${C}    ${NUM_OF_SA}"
-echo -e "${Cyan}GROUP_EMAIL           ${Green}:${C}    ${GROUP_EMAIL}"
+echo -e "${Cyan}PROJECT_NAME_PREFIX  ${Green}:${C}    ${PROJECT_NAME_PREFIX}"
+echo -e "${Cyan}PROJECT_NAME         ${Green}:${C}    ${PROJECT_NAME}"
+echo -e "${Cyan}EXPORT_LOCATION      ${Green}:${C}    ${EXPORT_LOCATION}"
+echo -e "${Cyan}SA_EMAIL_PREFIX      ${Green}:${C}    ${SA_EMAIL_PREFIX}"
+#echo -e "${Cyan}GROUP_NAME           ${Green}:${C}    ${GROUP_NAME}"
+echo -e "${Cyan}NUM_OF_SA            ${Green}:${C}    ${NUM_OF_SA}"
+echo -e "${Cyan}GROUP_EMAIL          ${Green}:${C}    ${GROUP_EMAIL}"
 echo -e "${Yellow}******************************${C}"
 
 echo -e "${Red}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!${C}"
@@ -45,7 +45,7 @@ if [ -z $GROUP_EMAIL ]; then
     fi
 fi
 
-echo -e "${Cyan}Using project name ${Yellow}${PROJECT_NAME}${C}"
+echo -e "${Cyan}Using project name ${Yellow}${PROJECT_NAME}"
 
 echo -e "${Cyan}Logging into Google Cloud${C}"
 if ! gcloud auth list --format=text | grep "ACTIVE" > /dev/null; then
