@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.source https://github.com/edifus/docker-seedbox-c
 # environment
 ENV GOPATH="/go" \
     HOME="/config" \
-    RCLONE_CONFIG="/config/rclone/rclone.conf" \
+    RCLONE_CONFIG="/config/rclone.conf" \
     MountPoint="/seedbox/merged" \
     RemotePath="union:" \
     UnmountCommands="-u -z" \
