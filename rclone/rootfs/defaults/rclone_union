@@ -1,7 +1,7 @@
 
 [union]
 type = union
-upstreams = /seedbox/separate/ ${multi_names}
+upstreams = ${local_union} ${multi_names}
 action_policy = epall
 create_policy = ff
 search_policy = ff
