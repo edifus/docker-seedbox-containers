@@ -11,9 +11,9 @@ if [ -z "$SECRETS_SET" ]; then
 fi
 
 #create folders
-mkdir -p ${MountPoint%/} /config/rclone
+mkdir -p ${MountPoint%/}
 
-if [ ! -f /config/rclone/rclone.conf ] || [ "${REGEN_CONFIG}" = "yes" ]; then
+if [ ! -f ${RCLONE_CONFIG} ] || [ "${REGEN_CONFIG}" = "yes" ]; then
     # Generate multi-drive conf
     read -a rclone_team_drive_ids_arr <<< $rclone_team_drive_ids
     count=0
@@ -30,3 +30,6 @@ if [ ! -f /config/rclone/rclone.conf ] || [ "${REGEN_CONFIG}" = "yes" ]; then
 else
     echo "**** found config - not overwriting ****"
 fi
+
+# fix permissions
+chown abc:abc -R /config

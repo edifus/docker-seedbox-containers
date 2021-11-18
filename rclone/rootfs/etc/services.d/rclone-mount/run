@@ -21,7 +21,7 @@ echo -e "${PREFFIX} ${Green}starting rclone mount $(date +%Y.%m.%d-%T)\n ${Yello
 
 exec s6-setuidgid abc \
   /usr/bin/rclone mount \
-  $MountCommands \
-  $RemotePath \
-  $MountPoint
+    $MountCommands \
+    $RemotePath \
+    $MountPoint
 #/usr/bin/rclone rc vfs/refresh recursive=true --rc-addr ${RCLONE_RC_ADDR} _async=true
