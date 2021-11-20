@@ -40,7 +40,7 @@ RUN set -eux && \
   echo "**** cleanup ****" && \
   apt-get clean && \
   rm -rvf \
-    /tmp \
+    /tmp/* \
     /var/lib/apt/lists/* \
     /var/tmp/*
 
