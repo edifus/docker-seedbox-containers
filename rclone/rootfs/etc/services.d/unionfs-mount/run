@@ -39,7 +39,7 @@ done
 # mount unionfs-fuse
 exec s6-setuidgid abc \
   /usr/bin/unionfs \
-    -o cow,allow_non_empty,allow_other,statfs_omit_ro \
+    -o cow,allow_other,statfs_omit_ro \
     ${LOCAL_DATA}=RO:${MountPoint%/*}/rclone=RO \
     ${MountPoint}
 
