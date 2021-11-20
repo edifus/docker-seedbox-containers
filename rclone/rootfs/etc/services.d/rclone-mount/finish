@@ -6,5 +6,5 @@
 RcloneMountPoint="${MountPoint%/*}/rclone"
 
 # make sure unmounted
-/usr/bin/fusermount -u -z ${RcloneMountPoint}
-/usr/bin/umount ${RcloneMountPoint}
+fusermount -u -z ${RcloneMountPoint}
+umount ${RcloneMountPoint}

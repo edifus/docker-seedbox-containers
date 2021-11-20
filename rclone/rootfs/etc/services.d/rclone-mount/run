@@ -25,8 +25,3 @@ exec s6-setuidgid abc \
     ${MountCommands} \
     ${RemotePath} \
     ${RcloneMountPoint}
-
-exec s6-setuidgid abc \ \
-  /usr/bin/rclone rc \
-    vfs/refresh recursive=true \
-    _async=true

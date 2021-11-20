@@ -29,13 +29,17 @@ do
     echo "**** waiting for gdrive mount ****"
     sleep 2
    else
-    echo "**** gdrive mounted ****"
+    # gdrive mounted
+    echo -e "${PREFFIX} ${Green}starting unionfs-fuse mount $(date +%Y.%m.%d-%T)\n ${Yellow} /usr/bin/unionfs-fuse -f -o allow_other,statfs_omit_ro,ro ${LOCAL_DATA}=RO:${MountPoint%/*}/rclone=RO ${MountPoint} ${Color_Off}"
+    # refresh vfs cache
+    /usr/bin/rclone rc \
+      vfs/refresh recursive=true \
+      _async=true > /dev/null
     break
   fi
 done
 
 # mount unionfs-fuse (read-only)
-echo -e "${PREFFIX} ${Green}starting unionfs-fuse mount $(date +%Y.%m.%d-%T)\n ${Yellow} /usr/bin/unionfs-fuse -f -o allow_other,statfs_omit_ro,ro ${LOCAL_DATA}=RO:${MountPoint%/*}/rclone=RO ${MountPoint} ${Color_Off}"
 exec s6-setuidgid abc \
   /usr/bin/unionfs -f \
   -o allow_other,statfs_omit_ro,ro \

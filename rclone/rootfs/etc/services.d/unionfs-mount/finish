@@ -3,5 +3,5 @@
 #set -x
 
 # make sure unmounted
-/usr/bin/fusermount -u -z ${MountPoint}
-/usr/bin/umount ${MountPoint}
+fusermount -u -z ${MountPoint}
+umount ${MountPoint}
