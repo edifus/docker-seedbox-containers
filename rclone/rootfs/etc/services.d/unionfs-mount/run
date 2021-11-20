@@ -39,9 +39,9 @@ do
   fi
 done
 
-# mount unionfs-fuse (read-only)
+# mount unionfs-fuse
 exec s6-setuidgid abc \
   /usr/bin/unionfs -f \
-  -o allow_other,statfs_omit_ro,ro \
+  -o cow,allow_other,statfs_omit_ro \
     ${LOCAL_DATA}=RO:${MountPoint%/*}/rclone=RO \
     ${MountPoint}
