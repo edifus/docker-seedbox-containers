@@ -10,7 +10,7 @@ if [ -z "$SECRETS_SET" ]; then
   exit 1
 fi
 
-# create folders
+# create mount folders
 mkdir -p "${MountPoint%/}" "${MountPoint%/*}/rclone"
 chmod 777 "${MountPoint%/}" "${MountPoint%/*}/rclone"
 
