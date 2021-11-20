@@ -1,0 +1,20 @@
+#!/usr/bin/with-contenv bash
+
+# make folders
+mkdir -p \
+  /config/{logs,formats}
+
+# install filebot formatting files
+[[ ! -e /config/formats/animeFormat.groovy ]] && \
+  cp /defaults/animeFormat.groovy /config/formats/animeFormat.groovy
+
+[[ ! -e /config/formats/moviesFormat.groovy ]] && \
+  cp /defaults/moviesFormat.groovy /config/formats/moviesFormat.groovy
+
+[[ ! -e /config/formats/seriesFormat.groovy ]] && \
+  cp /defaults/seriesFormat.groovy /config/formats/seriesFormat.groovy
+
+# fix permissions
+chown -R abc:abc \
+  /config \
+  /app

@@ -41,6 +41,11 @@ updates:
     directory: "/traktarr/"
     schedule:
       interval: "daily"
+  -
+    package-ecosystem: "docker"
+    directory: "/filebot/"
+    schedule:
+      interval: "daily"
   # Catch-all the rest
   -
     package-ecosystem: "docker"
