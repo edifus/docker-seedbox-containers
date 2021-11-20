@@ -6,29 +6,18 @@ PREFFIX="[cont-init.d] $(s6-basename ${0}):"
 REGEN_CONFIG=${REGEN_CONFIG:-no}
 
 if [ -z "$SECRETS_SET" ]; then
-    echo "${PREFFIX}${Red} ERROR - Secrets are not set!"
-    exit 1
+  echo "${PREFFIX}${Red} ERROR - Secrets are not set!"
+  exit 1
 fi
 
 #create folders
 mkdir -p ${MountPoint%/}
 
 if [ ! -f ${RCLONE_CONFIG} ] || [ "${REGEN_CONFIG}" = "yes" ]; then
-    # Generate multi-drive conf
-    read -a rclone_team_drive_ids_arr <<< $rclone_team_drive_ids
-    count=0
-    for rclone_team_drive_id in "${rclone_team_drive_ids_arr[@]}"; do
-        (envsubst < /defaults/rclone_multi_template) >> ${RCLONE_CONFIG}
-        multi_names="${multi_names} gdrive_mount_crypt_${count}:/:nc"
-        count=$((count+1))
-    done
-    # Create the union
-    ## Remove leading space
-    multi_names="${multi_names#"${multi_names%%[![:space:]]*}"}"
-    local_union=${LOCAL_DATA:-/seedbox/local}
-    (envsubst < /defaults/rclone_union) >> ${RCLONE_CONFIG}
+  echo "**** creating rclone config ****"
+  (envsubst < /defaults/rclone_template) >> ${RCLONE_CONFIG}
 else
-    echo "**** found config - not overwriting ****"
+  echo "**** found config - not overwriting ****"
 fi
 
 # fix permissions

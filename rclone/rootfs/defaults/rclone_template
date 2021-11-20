@@ -1,5 +1,5 @@
 
-[gdrive_${count}]
+[gdrive_0]
 type = drive
 scope = drive
 use_trash = false
@@ -7,19 +7,19 @@ server_side_across_configs = true
 chunk_size = 128M
 acknowledge_abuse = true
 team_drive = ${rclone_team_drive_id}
-service_account_file = /service_accounts/rclone_default.json
+service_account_file = /config/service_accounts/rclone_default.json
 
-[gdrive_upload_crypt_${count}]
+[gdrive_upload_crypt_0]
 type = crypt
-remote = gdrive_${count}:/${rclone_gdrive_mount_folder}
+remote = gdrive_0:/${rclone_gdrive_mount_folder}
 filename_encryption = standard
 directory_name_encryption = true
 password = ${rclone_encryption_password1}
 password2 = ${rclone_encryption_password2}
 
-[gdrive_mount_crypt_${count}]
+[gdrive_mount_crypt_0]
 type = crypt
-remote = gdrive_${count}:/${rclone_gdrive_mount_folder}
+remote = gdrive_0:/${rclone_gdrive_mount_folder}
 filename_encryption = standard
 directory_name_encryption = true
 password = ${rclone_encryption_password1}

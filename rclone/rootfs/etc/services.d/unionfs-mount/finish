@@ -10,7 +10,7 @@ SERVICE_DIR=/var/run/s6/services
 SERVICE=rclone-mount
 
 checkRclone(){
-    ps aux | grep '.rclon[e].*'gdrive_mount_crypt_0:'' | grep -v grep > /dev/null
+    ps aux | grep '.rclon[e].*'$RemotePath'' | grep -v grep > /dev/null
     return $?
 }
 
