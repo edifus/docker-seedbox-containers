@@ -36,4 +36,4 @@ RUN set -eux && \
   sed -i 's/APP_DATA=.*/APP_DATA="$HOME"/g; s/-Dapplication.deployment=deb/-Dapplication.deployment=docker/g' /usr/bin/filebot
 
 # install watcher scripts
-COPY rootfs/ /
+COPY filebot/rootfs/ /
