@@ -10,12 +10,13 @@ if [ -z "$SECRETS_SET" ]; then
   exit 1
 fi
 
-#create folders
-mkdir -p ${MountPoint%/}
+# create folders
+mkdir -p ${MountPoint%/} ${MountPoint%/*}/rclone
 
+# create config from template
 if [ ! -f ${RCLONE_CONFIG} ] || [ "${REGEN_CONFIG}" = "yes" ]; then
   echo "**** creating rclone config ****"
-  (envsubst < /defaults/rclone_template) >> ${RCLONE_CONFIG}
+  (envsubst < /defaults/rclone_template) > ${RCLONE_CONFIG}
 else
   echo "**** found config - not overwriting ****"
 fi
