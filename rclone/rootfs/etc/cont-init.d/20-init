@@ -11,7 +11,8 @@ if [ -z "$SECRETS_SET" ]; then
 fi
 
 # create folders
-mkdir -p ${MountPoint%/} ${MountPoint%/*}/rclone
+mkdir -p "${MountPoint%/}" "${MountPoint%/*}/rclone"
+chmod 777 "${MountPoint%/}" "${MountPoint%/*}/rclone"
 
 # create config from template
 if [ ! -f ${RCLONE_CONFIG} ] || [ "${REGEN_CONFIG}" = "yes" ]; then

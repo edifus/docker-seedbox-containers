@@ -9,8 +9,8 @@ _term() {
 
 trap _term SIGTERM
 
-# give time for gdrive to mount
-sleep 2
+# give time for gdrive to mount properly
+sleep 5
 
 source /etc/colors.sh
 
@@ -20,30 +20,24 @@ LOCAL_DATA=${LOCAL_DATA:-/seedbox/local}
 
 # Clean up mount options
 MountCommands=$(echo ${MountCommands} | xargs echo -n)
-
-echo -e "${PREFFIX} ${Green}starting unionfs-fuse mount $(date +%Y.%m.%d-%T)\n ${Yellow} /usr/bin/unionfs-fuse -o cow, allow_other,statfs_omit_ro ${LOCAL_DATA}=RO:${MountPoint%/*}/rclone=RO ${MountPoint} ${Color_Off}"
+RcloneMountPoint="${MountPoint%/*}/rclone"
 
 # wait for gdrive mount
 while true
 do
-  if ! grep -qs "${MountPoint%/*}/rclone" /proc/mounts; then
+  if ! ls -la "${RcloneMountPoint}/${PREFIX}" > /dev/null; then
     echo "**** waiting for gdrive mount ****"
-    sleep 5
-    continue
-  else
+    sleep 2
+   else
     echo "**** gdrive mounted ****"
     break
   fi
 done
 
-# mount unionfs-fuse
+# mount unionfs-fuse (read-only)
+echo -e "${PREFFIX} ${Green}starting unionfs-fuse mount $(date +%Y.%m.%d-%T)\n ${Yellow} /usr/bin/unionfs-fuse -f -o allow_other,statfs_omit_ro,ro ${LOCAL_DATA}=RO:${MountPoint%/*}/rclone=RO ${MountPoint} ${Color_Off}"
 exec s6-setuidgid abc \
-  /usr/bin/unionfs \
-    -o cow,allow_other,statfs_omit_ro \
+  /usr/bin/unionfs -f \
+  -o allow_other,statfs_omit_ro,ro \
     ${LOCAL_DATA}=RO:${MountPoint%/*}/rclone=RO \
     ${MountPoint}
-
-while true
-do
-  : # hold (unionfs-fuse forks to background)
-done
