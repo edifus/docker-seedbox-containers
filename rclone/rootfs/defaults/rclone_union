@@ -1,7 +1,0 @@
-
-[union]
-type = union
-upstreams = ${local_union} ${multi_names}
-action_policy = epall
-create_policy = ff
-search_policy = ff

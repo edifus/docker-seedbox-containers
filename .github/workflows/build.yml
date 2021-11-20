@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
@@ -37,6 +38,9 @@ jobs:
 
           - image: "edifus/sonarr"
             dockerfile: "sonarr/Dockerfile"
+
+          - image: "edifus/filebot"
+            dockerfile: "filebot/Dockerfile"
 
 #          - image: "edifus/bazarr"
 #            dockerfile: "bazarr/Dockerfile"

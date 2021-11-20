@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+
+# run script as user abc
+exec s6-setuidgid abc \
+  /bin/bash /app/inotify-watch.sh

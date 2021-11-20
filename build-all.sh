@@ -11,6 +11,8 @@ docker build -t edifus/radarr -f radarr/Dockerfile .
 
 docker build -t edifus/sonarr -f sonarr/Dockerfile .
 
+docker build -t edifus/filebot -f filebot/Dockerfile .
+
 #docker build -t edifus/bazarr -f bazarr/Dockerfile .
 
 #docker build -t edifus/traktarr -f traktarr/Dockerfile .
