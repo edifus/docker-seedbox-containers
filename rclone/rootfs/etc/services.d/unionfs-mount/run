@@ -10,7 +10,7 @@ _term() {
 trap _term SIGTERM
 
 # give time for gdrive to mount
-sleep 5
+sleep 2
 
 source /etc/colors.sh
 
@@ -23,26 +23,27 @@ MountCommands=$(echo ${MountCommands} | xargs echo -n)
 
 echo -e "${PREFFIX} ${Green}starting unionfs-fuse mount $(date +%Y.%m.%d-%T)\n ${Yellow} /usr/bin/unionfs-fuse -o cow, allow_other,statfs_omit_ro ${LOCAL_DATA}=RO:${MountPoint%/*}/rclone=RO ${MountPoint} ${Color_Off}"
 
-rclone_unmounted=true
-while ${rclone_unmounted}
+# wait for gdrive mount
+while true
 do
   if ! grep -qs "${MountPoint%/*}/rclone" /proc/mounts; then
     echo "**** waiting for gdrive mount ****"
-    sleep 10
+    sleep 5
+    continue
   else
     echo "**** gdrive mounted ****"
-    rclone_unounted=false
+    break
   fi
 done
 
+# mount unionfs-fuse
 exec s6-setuidgid abc \
   /usr/bin/unionfs-fuse \
     -o cow,allow_non_empty,allow_other,statfs_omit_ro \
     ${LOCAL_DATA}=RO:${MountPoint%/*}/rclone=RO \
     ${MountPoint}
 
-# hold (unionfs-fuse forks to background)
 while true
 do
-  sleep 21600 # 6 hours
+  : # hold (unionfs-fuse forks to background)
 done
