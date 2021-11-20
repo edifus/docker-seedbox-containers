@@ -1,13 +1,13 @@
 #!/usr/bin/with-contenv bash
 
-local FILEBOT_BASE=/config
-local FILEBOT_LOG=${FILEBOT_BASE}/logs/filebot.amc.log
-local FILEBOT_EXCLUDE=${FILEBOT_BASE}/logs/filebot.exclude.log
-local MOVIE_FORMAT=${FILEBOT_BASE}/formats/moviesFormat.groovy
-local SERIES_FORMAT=${FILEBOT_BASE}/formats/seriesFormat.groovy
-local ANIME_FORMAT=${FILEBOT_BASE}/formats/animeFormat.groovy
+FILEBOT_BASE=/config
+FILEBOT_LOG=${FILEBOT_BASE}/logs/filebot.amc.log
+FILEBOT_EXCLUDE=${FILEBOT_BASE}/logs/filebot.exclude.log
+MOVIE_FORMAT=${FILEBOT_BASE}/formats/moviesFormat.groovy
+SERIES_FORMAT=${FILEBOT_BASE}/formats/seriesFormat.groovy
+ANIME_FORMAT=${FILEBOT_BASE}/formats/animeFormat.groovy
 
-local OUTPUT_FOLDER=
+OUTPUT_FOLDER=
 
 usage() {
   cat << EOF
@@ -26,7 +26,7 @@ while getopts ":h:m:" OPTION; do
       exit 1
       ;;
     m)
-      FILEBOT_MODE=${OPTARG}
+      _FILEBOT_MODE=${OPTARG}
       ;;
     ?)
       usage
@@ -36,7 +36,7 @@ while getopts ":h:m:" OPTION; do
 done
 
 
-if [[ ${FILEBOT_MODE} != "test" ]] && [[ ${FILEBOT_MODE} != "hardlink" ]]; then
+if [[ ${_FILEBOT_MODE} != "test" ]] && [[ ${_FILEBOT_MODE} != "hardlink" ]]; then
   echo "script must be run in test mode or hardlink mode"
   exit 1
 fi
@@ -69,7 +69,7 @@ elif [[ ${WATCHDIR} =~ "anime" ]]; then
 fi
 
 echo "$(date +%Y-%m-%dT%H:%M:%S) | $0 $*"
-#echo "mode:   ${FILEBOT_MODE}"
+#echo "mode:   ${_FILEBOT_MODE}"
 #echo "source: ${WATCHDIR}"
 #echo "target: ${OUTPUT_FOLDER}"
 #echo "label:  ${FILEBOT_LABEL}"
@@ -77,7 +77,7 @@ echo "$(date +%Y-%m-%dT%H:%M:%S) | $0 $*"
 
 find "${WATCHDIR}" -type f \( -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.avi' \) -not -iname '*sample*' -links 1 \
   -exec filebot -script fn:amc -r -non-strict \
-  --action "${FILEBOT_MODE}" \
+  --action "${_FILEBOT_MODE}" \
   --conflict override \
   --output ${OUTPUT_FOLDER} \
   --log-file ${FILEBOT_LOG} \
@@ -93,6 +93,6 @@ find "${WATCHDIR}" -type f \( -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.avi'
   {} +
 
 # update plex libraries
-if [[ ${FILEBOT_MODE} != "test" ]]; then
+if [[ ${_FILEBOT_MODE} != "test" ]] && [ ! -z ${PLEX_TOKEN} ]; then
   curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${PLEX_TOKEN}
 fi
