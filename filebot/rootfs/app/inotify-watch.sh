@@ -24,9 +24,6 @@ COMMAND="/bin/bash /app/filebot-add-to-plex.sh -m hardlink"
 EXCLUDE='(\.md5|\.nfo)'
 INCLUDE='(\.mkv)'
 
-## Whether to enable verbosity. If enabled, change events are output.
-VERBOSE=1
-
 ##################################
 
 ##
@@ -59,9 +56,9 @@ echo "$(date +%Y-%m-%dT%H:%M:%S) - Starting monitoring on '${WATCHDIR}'"
 inotifywait -m -q -r -e ${EVENTS} --exclude ${EXCLUDE} --format '%w %f %e' "${WATCHDIR}" | \
   while read -r dir filename event
   do
-    if [ ${VERBOSE} -ne 0 ]; then
-      echo [CHANGE] [EVENT: "${event}"] [BASE DIR: "${dir}"] [NEW: "${filename}"]
-    fi
+
+    # output detected events when triggered
+    echo [CHANGE] [EVENT: "${event}"] [BASE DIR: "${dir}"] [NEW: "${filename}"]
 
     ## Clear $PID if the last command has finished.
     if [ -n "${PID}" ] && ( ! ps -p "${PID}" > /dev/null ); then
