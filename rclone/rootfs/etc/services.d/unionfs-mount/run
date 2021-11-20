@@ -43,5 +43,5 @@ done
 exec s6-setuidgid abc \
   /usr/bin/unionfs -f \
   -o cow,allow_other,statfs_omit_ro \
-    ${LOCAL_DATA}=RO:${MountPoint%/*}/rclone=RO \
+    ${LOCAL_DATA}=RW:${MountPoint%/*}/rclone=RO \
     ${MountPoint}
