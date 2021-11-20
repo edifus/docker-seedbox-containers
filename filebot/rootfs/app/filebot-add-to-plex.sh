@@ -1,14 +1,5 @@
 #!/usr/bin/with-contenv bash
 
-FILEBOT_BASE=/config
-FILEBOT_LOG=${FILEBOT_BASE}/logs/filebot.amc.log
-FILEBOT_EXCLUDE=${FILEBOT_BASE}/logs/filebot.exclude.log
-MOVIE_FORMAT=${FILEBOT_BASE}/formats/moviesFormat.groovy
-SERIES_FORMAT=${FILEBOT_BASE}/formats/seriesFormat.groovy
-ANIME_FORMAT=${FILEBOT_BASE}/formats/animeFormat.groovy
-
-OUTPUT_FOLDER=
-
 usage() {
   cat << EOF
   usage: $0 options
@@ -35,6 +26,14 @@ while getopts ":h:m:" OPTION; do
   esac
 done
 
+FILEBOT_BASE=/config
+FILEBOT_LOG=${FILEBOT_BASE}/logs/filebot.amc.${_FILEBOT_MODE}.log
+FILEBOT_EXCLUDE=${FILEBOT_BASE}/logs/filebot.exclude.log
+MOVIE_FORMAT=${FILEBOT_BASE}/formats/moviesFormat.groovy
+SERIES_FORMAT=${FILEBOT_BASE}/formats/seriesFormat.groovy
+ANIME_FORMAT=${FILEBOT_BASE}/formats/animeFormat.groovy
+
+OUTPUT_FOLDER=
 
 if [[ ${_FILEBOT_MODE} != "test" ]] && [[ ${_FILEBOT_MODE} != "hardlink" ]]; then
   echo "script must be run in test mode or hardlink mode"
@@ -75,6 +74,10 @@ echo "$(date +%Y-%m-%dT%H:%M:%S) | $0 $*"
 #echo "label:  ${FILEBOT_LABEL}"
 #echo "plex:   ${LIBRARY_INDEX}"
 
+# pause to wait for files
+# script can only be triggered once every X seconds
+sleep 10
+
 find "${WATCHDIR}" -type f \( -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.avi' \) -not -iname '*sample*' -links 1 \
   -exec filebot -script fn:amc -r -non-strict \
   --action "${_FILEBOT_MODE}" \
@@ -93,6 +96,6 @@ find "${WATCHDIR}" -type f \( -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.avi'
   {} +
 
 # update plex libraries
-if [[ ${_FILEBOT_MODE} != "test" ]] && [ ! -z ${PLEX_TOKEN} ]; then
+if [[ ${_FILEBOT_MODE} != "test" ]]; then
   curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${PLEX_TOKEN}
 fi
