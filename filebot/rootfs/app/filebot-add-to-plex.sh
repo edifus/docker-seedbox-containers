@@ -101,6 +101,7 @@ s6-setuidgid abc \
 # update plex libraries
 if [[ "${_FILEBOT_MODE}" != "test" ]]; then
   if [ -z "${_PLEX_TOKEN+x}" ]; then
+    echo "updating plex library - curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${_PLEX_TOKEN}"
     curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${_PLEX_TOKEN}
   fi
 fi
