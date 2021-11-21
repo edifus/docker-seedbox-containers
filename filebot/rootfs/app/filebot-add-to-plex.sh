@@ -10,7 +10,7 @@ usage() {
 EOF
 }
 
-while getopts ":h:m:" OPTION; do
+while getopts ":h:m:t:" OPTION; do
   case ${OPTION} in
     h)
       usage
@@ -18,6 +18,9 @@ while getopts ":h:m:" OPTION; do
       ;;
     m)
       _FILEBOT_MODE=${OPTARG}
+      ;;
+    m)
+      _PLEX_TOKEN=${OPTARG}
       ;;
     ?)
       usage
@@ -98,7 +101,6 @@ s6-setuidgid abc \
 # update plex libraries
 if [[ "${_FILEBOT_MODE}" != "test" ]]; then
   if [ -n "${PLEX_TOKEN}" ]; then
-    s6-setuidgid abc \
-      curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${PLEX_TOKEN}
+    curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${_PLEX_TOKEN}
   fi
 fi
