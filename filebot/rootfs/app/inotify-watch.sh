@@ -46,7 +46,7 @@ clean_up () {
 ## Execute "clean_up" on exit.
 trap "clean_up" EXIT
 
-
+# start inotifywait loop
 echo "$(date +%Y-%m-%dT%H:%M:%S) - Monitoring:   '${WATCHDIR}'"
 echo "                    - Filebot Mode: '${FILEBOT_MODE}'"
 
