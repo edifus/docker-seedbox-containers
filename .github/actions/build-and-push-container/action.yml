@@ -45,3 +45,5 @@ runs:
         tags: |
           ghcr.io/${{ inputs.image }}:${{ env.GITHUB_REF_SLUG_URL == inputs.latest_tag_branch && 'latest' || env.GITHUB_REF_SLUG_URL }}
           ghcr.io/${{ inputs.image }}:${{ env.GITHUB_SHA_SHORT }}
+        cache-from: |
+          ghcr.io/${{ inputs.image }}:${{ env.GITHUB_REF_SLUG_URL == inputs.latest_tag_branch && 'latest' || env.GITHUB_REF_SLUG_URL }}
