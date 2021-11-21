@@ -1,9 +1,5 @@
 #!/usr/bin/with-contenv bash
 
-# run script as user abc
-#exec s6-setuidgid abc \
-#  /bin/bash /app/inotify-watch.sh
-
 # (c) Wolfgang Ziegler // fago
 #
 # Inotify script to trigger a command on file changes.
@@ -13,17 +9,24 @@
 # execution only.
 #
 
-if [ ! -d ${WATCHDIR} ]; then
+if [ ! -d ${WATCH_DIR} ]; then
   echo "**** \$WATCHDIR environment variable not set. Exiting. ****"
   exit 1
 fi
 
+if [ ! -d ${LOCAL_DATA} ]; then
+  echo "**** ${LOCAL_DATA} environment variable not set. Exiting. ****"
+  exit 1
+fi
+
+FILEBOT_MODE=${FILEBOT_MODE:-test}
+
 ######### Configuration #########
 
 EVENTS="close_write,moved_to"
-COMMAND="exec s6-setuidgid abc /bin/bash /app/filebot-add-to-plex.sh -m hardlink -t ${PLEX_TOKEN} -w ${WATCHDIR}"
+COMMAND="exec s6-setuidgid abc /bin/bash /app/filebot-add-to-plex.sh ${WATCH_DIR} ${LOCAL_DATA} ${FILEBOT_MODE} ${PLEX_TOKEN}"
 
-[[ ${WATCHDIR} != */ ]] && WATCHDIR="${WATCHDIR}/"
+[[ ${WATCH_DIR} != */ ]] && WATCHDIR="${WATCH_DIR}/"
 
 ## Exclude Git and temporary files from PHPstorm from watching.
 EXCLUDE='(\.md5|\.nfo)'
@@ -52,15 +55,16 @@ clean_up () {
 trap "clean_up" EXIT
 
 # start inotifywait loop
-echo "$(date +%Y-%m-%dT%H:%M:%S) - Monitoring:   '${WATCHDIR}'"
-echo "                    - Filebot Mode: '${FILEBOT_MODE}'"
-echo "                    - Plex Token:   '${PLEX_TOKEN}'"
+echo "$(date +%Y-%m-%dT%H:%M:%S) | $0 $*"
+echo "$(date +%Y-%m-%dT%H:%M:%S) | Monitoring:   '${WATCH_DIR}'"
+echo "$(date +%Y-%m-%dT%H:%M:%S) | Filebot Mode: '${FILEBOT_MODE}'"
+echo "$(date +%Y-%m-%dT%H:%M:%S) | Plex Token:   '${PLEX_TOKEN}'"
 
 ##
 ## Run inotifywait in a loop that is not blocked on command execution and ignore
 ## irrelevant events.
 ##
-inotifywait -m -q -r -e ${EVENTS} --exclude ${EXCLUDE} --format '%w %f %e' "${WATCHDIR}" | \
+inotifywait -m -q -r -e ${EVENTS} --exclude ${EXCLUDE} --format '%w %f %e' "${WATCH_DIR}" | \
   while read -r dir filename event
   do
 
@@ -100,4 +104,3 @@ inotifywait -m -q -r -e ${EVENTS} --exclude ${EXCLUDE} --format '%w %f %e' "${WA
       ## If we are already waiting, there is nothing todo.
     fi
 done
-
