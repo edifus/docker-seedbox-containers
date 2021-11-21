@@ -2,4 +2,3 @@
 
 fusermount -uz $MountPoint || true
 umount $MountPoint || true
-rm -r $MountPoint

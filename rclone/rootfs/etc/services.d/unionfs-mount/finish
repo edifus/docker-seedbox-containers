@@ -1,7 +1,0 @@
-#!/usr/bin/with-contenv sh
-
-#set -x
-
-# make sure unmounted
-fusermount -u -z ${MountPoint}
-umount ${MountPoint}
