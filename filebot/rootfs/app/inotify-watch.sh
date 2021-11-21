@@ -16,7 +16,7 @@ fi
 ######### Configuration #########
 
 EVENTS="close_write,moved_to"
-COMMAND="exec s6-setuidgid abc /bin/bash /app/filebot-add-to-plex.sh -m hardlink"
+COMMAND="/bin/bash /app/filebot-add-to-plex.sh -m hardlink"
 
 [[ ${WATCHDIR} != */ ]] && WATCHDIR="${WATCHDIR}/"
 

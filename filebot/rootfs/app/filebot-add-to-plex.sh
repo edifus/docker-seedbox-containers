@@ -78,26 +78,28 @@ echo "$(date +%Y-%m-%dT%H:%M:%S) | $0 $*"
 # script can only be triggered once every X seconds
 sleep 10
 
-find "${WATCHDIR}" -type f \( -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.avi' \) -not -iname '*sample*' -links 1 \
-  -exec filebot -script fn:amc -r -non-strict \
-  --action "${_FILEBOT_MODE}" \
-  --conflict override \
-  --output ${OUTPUT_FOLDER} \
-  --log-file ${FILEBOT_LOG} \
-  --def artwork=n \
-        extras=n \
-        skipExtract=y \
-        unsorted=n \
-        ut_label=${FILEBOT_LABEL} \
-        excludeList=${FILEBOT_EXCLUDE} \
-        movieFormat=@${MOVIE_FORMAT} \
-        seriesFormat=@${SERIES_FORMAT} \
-        animeFormat=@${ANIME_FORMAT} \
-  {} +
+exec s6-setuidgid abc \
+  find "${WATCHDIR}" -type f \( -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.avi' \) -not -iname '*sample*' -links 1 \
+    -exec filebot -script fn:amc -r -non-strict \
+    --action "${_FILEBOT_MODE}" \
+    --conflict override \
+    --output ${OUTPUT_FOLDER} \
+    --log-file ${FILEBOT_LOG} \
+    --def artwork=n \
+          extras=n \
+          skipExtract=y \
+          unsorted=n \
+          ut_label=${FILEBOT_LABEL} \
+          excludeList=${FILEBOT_EXCLUDE} \
+          movieFormat=@${MOVIE_FORMAT} \
+          seriesFormat=@${SERIES_FORMAT} \
+          animeFormat=@${ANIME_FORMAT} \
+    {} +
 
 # update plex libraries
 if [[ "${_FILEBOT_MODE}" != "test" ]]; then
   if [ -n "${PLEX_TOKEN}" ]; then
-    curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${PLEX_TOKEN}
+    exec s6-setuidgid abc \
+      curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${PLEX_TOKEN}
   fi
 fi
