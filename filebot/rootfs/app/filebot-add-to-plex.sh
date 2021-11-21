@@ -96,6 +96,8 @@ find "${WATCHDIR}" -type f \( -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.avi'
   {} +
 
 # update plex libraries
-if [ ! "${_FILEBOT_MODE}" = "test" ] || [ -n "${PLEX_TOKEN}" ]; then
-  curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${PLEX_TOKEN}
+if [[ "${_FILEBOT_MODE}" =~ "test" ]]; then
+  if [ -n "${PLEX_TOKEN}" ]; then
+    curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${PLEX_TOKEN}
+  fi
 fi
