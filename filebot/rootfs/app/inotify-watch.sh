@@ -16,7 +16,7 @@ fi
 ######### Configuration #########
 
 EVENTS="close_write,moved_to"
-COMMAND="/bin/bash /app/filebot-add-to-plex.sh -m hardlink"
+COMMAND="/bin/bash /app/filebot-add-to-plex.sh -m hardlink -t ${PLEX_TOKEN}"
 
 [[ ${WATCHDIR} != */ ]] && WATCHDIR="${WATCHDIR}/"
 
@@ -49,6 +49,7 @@ trap "clean_up" EXIT
 # start inotifywait loop
 echo "$(date +%Y-%m-%dT%H:%M:%S) - Monitoring:   '${WATCHDIR}'"
 echo "                    - Filebot Mode: '${FILEBOT_MODE}'"
+echo "                    - Plex Token:   '${PLEX_TOKEN}'"
 
 ##
 ## Run inotifywait in a loop that is not blocked on command execution and ignore
