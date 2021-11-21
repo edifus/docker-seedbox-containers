@@ -1,36 +1,9 @@
 #!/usr/bin/with-contenv bash
 
-usage() {
-  cat << EOF
-  usage: $0 options
-
-  OPTIONS:
-    -h    Show this message
-    -m    Mode to run script (test/hardlink)
-EOF
-}
-
-while getopts ":h:m:t:w:" OPTION; do
-  case ${OPTION} in
-    h)
-      usage
-      exit 1
-      ;;
-    m)
-      _FILEBOT_MODE=${OPTARG}
-      ;;
-    t)
-      _PLEX_TOKEN=${OPTARG}
-      ;;
-    w)
-      _WATCHDIR=${OPTARG}
-      ;;
-    ?)
-      usage
-      exit
-      ;;
-  esac
-done
+_WATCH_DIR="${1}"
+_LOCAL_DATA="${2}"
+_FILEBOT_MODE="${3}"
+_PLEX_TOKEN="${4}"
 
 FILEBOT_BASE=/config
 FILEBOT_LOG=${FILEBOT_BASE}/logs/filebot.amc.${_FILEBOT_MODE}.log
@@ -46,44 +19,41 @@ if [[ ${_FILEBOT_MODE} != "test" ]] && [[ ${_FILEBOT_MODE} != "hardlink" ]]; the
   exit 1
 fi
 
-if [[ ${_WATCHDIR} =~ "movies" ]]; then
+if [[ ${_WATCH_DIR} =~ "movies" ]]; then
   FILEBOT_LABEL="Movies"
-  if [[ ${_WATCHDIR} =~ "movies-4k" ]]; then
+  if [[ ${_WATCH_DIR} =~ "movies-4k" ]]; then
     LIBRARY_INDEX=6
-    OUTPUT_FOLDER=/seedbox/media/videos/movies-4k
-  elif [[ ${_WATCHDIR} =~ "movies-hdr" ]]; then
+    OUTPUT_FOLDER="${_LOCAL_DATA}/videos/movies-4k"
+  elif [[ ${_WATCH_DIR} =~ "movies-hdr" ]]; then
     LIBRARY_INDEX=2
-    OUTPUT_FOLDER=/seedbox/media/videos/movies-hdr
+    OUTPUT_FOLDER="${_LOCAL_DATA}/videos/movies-hdr"
   else
     LIBRARY_INDEX=2
-    OUTPUT_FOLDER=/seedbox/media/videos/movies
+    OUTPUT_FOLDER=${_LOCAL_DATA}/videos/movies
   fi
-elif [[ ${_WATCHDIR} =~ "tv" ]]; then
+elif [[ ${_WATCH_DIR} =~ "tv" ]]; then
   FILEBOT_LABEL="Series"
-  if [[ ${_WATCHDIR} =~ "tv-4k" ]]; then
+  if [[ ${_WATCH_DIR} =~ "tv-4k" ]]; then
     LIBRARY_INDEX=7
-    OUTPUT_FOLDER=/seedbox/media/videos/tv-4k
+    OUTPUT_FOLDER="${_LOCAL_DATA}/videos/tv-4k"
   else
     LIBRARY_INDEX=3
-    OUTPUT_FOLDER=/seedbox/media/videos/tv
+    OUTPUT_FOLDER="${_LOCAL_DATA}/videos/tv"
   fi
-elif [[ ${_WATCHDIR} =~ "anime" ]]; then
+elif [[ ${_WATCH_DIR} =~ "anime" ]]; then
   FILEBOT_LABEL="Anime"
   LIBRARY_INDEX=1
-  OUTPUT_FOLDER=/seedbox/media/videos/anime
+  OUTPUT_FOLDER="${_LOCAL_DATA}/videos/anime"
 fi
 
 echo "$(date +%Y-%m-%dT%H:%M:%S) | $0 $*"
 #echo "mode:   ${_FILEBOT_MODE}"
-#echo "source: ${_WATCHDIR}"
+#echo "source: ${_WATCH_DIR}"
 #echo "target: ${OUTPUT_FOLDER}"
 #echo "label:  ${FILEBOT_LABEL}"
 #echo "plex:   ${LIBRARY_INDEX}"
 
-# script can only be triggered once every X seconds
-sleep 5
-
-find "${_WATCHDIR}" -type f \( -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.avi' \) -not -iname '*sample*' -links 1 \
+find "${_WATCH_DIR}" -type f \( -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.avi' \) -not -iname '*sample*' -links 1 \
   -exec filebot -script fn:amc -r -non-strict \
   --action "${_FILEBOT_MODE}" \
   --conflict override \
@@ -105,3 +75,7 @@ if [[ "${_FILEBOT_MODE}" != "test" ]]; then
   echo "updating plex library - curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${_PLEX_TOKEN}"
   curl http://plex:32400/library/sections/${LIBRARY_INDEX}/refresh?X-Plex-Token=${_PLEX_TOKEN}
 fi
+
+echo
+echo "**** filebot run complete ****"
+echo
