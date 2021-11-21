@@ -30,7 +30,7 @@ do
     sleep 2
    else
     # gdrive mounted
-    echo -e "${PREFFIX} ${Green}starting unionfs-fuse mount $(date +%Y.%m.%d-%T)\n ${Yellow} /usr/bin/unionfs-fuse -f -o allow_other,statfs_omit_ro,ro ${LOCAL_DATA}=RO:${MountPoint%/*}/rclone=RO ${MountPoint} ${Color_Off}"
+    echo -e "${PREFFIX} ${Green}starting unionfs-fuse mount $(date +%Y.%m.%d-%T)\n ${Yellow} /usr/bin/unionfs-fuse -f -o cow,allow_other,statfs_omit_ro ${LOCAL_DATA}=RW:${MountPoint%/*}/rclone=RO ${MountPoint} ${Color_Off}"
     # refresh vfs cache
     /usr/bin/rclone rc \
       vfs/refresh recursive=true \

@@ -11,8 +11,10 @@ if [ -z "$SECRETS_SET" ]; then
 fi
 
 # create mount folders
-mkdir -p "${MountPoint%/}" "${MountPoint%/*}/rclone"
-chmod 777 "${MountPoint%/}" "${MountPoint%/*}/rclone"
+RcloneMountPoint="${MountPoint%/*}/rclone"
+mkdir -p "${MountPoint%/}" "${RcloneMountPoint}"
+chmod 777 "${MountPoint%/}" "${RcloneMountPoint}"
+chown abc:abc "${MountPoint}" "${RcloneMountPoint}"
 
 # create config from template
 if [ ! -f ${RCLONE_CONFIG} ] || [ "${REGEN_CONFIG}" = "yes" ]; then
@@ -22,5 +24,5 @@ else
   echo "**** found config - not overwriting ****"
 fi
 
-# fix permissions
+# permissions for config files
 chown abc:abc -R /config

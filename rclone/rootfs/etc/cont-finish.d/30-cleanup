@@ -1,4 +1,10 @@
 #!/usr/bin/with-contenv sh
 
+# cleanup rclone mount
+RcloneMountPoint="${MountPoint%/*}/rclone"
+fusermount -uz ${RcloneMountPoint} || true
+umount ${RcloneMountPoint} || true
+
+# cleanup unionfs-fuse mount
 fusermount -uz $MountPoint || true
 umount $MountPoint || true
