@@ -39,9 +39,6 @@ jobs:
           - image: "edifus/sonarr"
             dockerfile: "sonarr/Dockerfile"
 
-          - image: "edifus/filebot"
-            dockerfile: "filebot/Dockerfile"
-
 #          - image: "edifus/bazarr"
 #            dockerfile: "bazarr/Dockerfile"
 

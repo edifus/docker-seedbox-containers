@@ -1,2 +1,0 @@
-#!/bin/bash
-source /etc/cont-init.d/20-init
