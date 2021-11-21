@@ -48,7 +48,7 @@ trap "clean_up" EXIT
 
 
 echo "$(date +%Y-%m-%dT%H:%M:%S) - Monitoring:   '${WATCHDIR}'"
-echo "                    -Filebot Mode: '${FILEBOT_MODE}'"
+echo "                    - Filebot Mode: '${FILEBOT_MODE}'"
 
 ##
 ## Run inotifywait in a loop that is not blocked on command execution and ignore
