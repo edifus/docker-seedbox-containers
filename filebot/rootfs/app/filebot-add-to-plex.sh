@@ -74,9 +74,8 @@ echo "$(date +%Y-%m-%dT%H:%M:%S) | $0 $*"
 #echo "label:  ${FILEBOT_LABEL}"
 #echo "plex:   ${LIBRARY_INDEX}"
 
-# pause to wait for files
 # script can only be triggered once every X seconds
-sleep 10
+sleep 5
 
 s6-setuidgid abc \
   find "${WATCHDIR}" -type f \( -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.avi' \) -not -iname '*sample*' -links 1 \
