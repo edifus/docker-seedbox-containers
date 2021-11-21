@@ -19,7 +19,7 @@ while getopts ":h:m:t:" OPTION; do
     m)
       _FILEBOT_MODE=${OPTARG}
       ;;
-    m)
+    t)
       _PLEX_TOKEN=${OPTARG}
       ;;
     ?)
