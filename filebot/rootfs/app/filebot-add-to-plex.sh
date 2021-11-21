@@ -23,27 +23,27 @@ if [[ ${_WATCH_DIR} =~ "movies" ]]; then
   FILEBOT_LABEL="Movies"
   if [[ ${_WATCH_DIR} =~ "movies-4k" ]]; then
     LIBRARY_INDEX=6
-    OUTPUT_FOLDER="${_LOCAL_DATA}/videos/movies-4k"
+    OUTPUT_FOLDER="${_LOCAL_DATA}/movies-4k"
   elif [[ ${_WATCH_DIR} =~ "movies-hdr" ]]; then
     LIBRARY_INDEX=2
-    OUTPUT_FOLDER="${_LOCAL_DATA}/videos/movies-hdr"
+    OUTPUT_FOLDER="${_LOCAL_DATA}/movies-hdr"
   else
     LIBRARY_INDEX=2
-    OUTPUT_FOLDER=${_LOCAL_DATA}/videos/movies
+    OUTPUT_FOLDER=${_LOCAL_DATA}/movies
   fi
 elif [[ ${_WATCH_DIR} =~ "tv" ]]; then
   FILEBOT_LABEL="Series"
   if [[ ${_WATCH_DIR} =~ "tv-4k" ]]; then
     LIBRARY_INDEX=7
-    OUTPUT_FOLDER="${_LOCAL_DATA}/videos/tv-4k"
+    OUTPUT_FOLDER="${_LOCAL_DATA}/tv-4k"
   else
     LIBRARY_INDEX=3
-    OUTPUT_FOLDER="${_LOCAL_DATA}/videos/tv"
+    OUTPUT_FOLDER="${_LOCAL_DATA}/tv"
   fi
 elif [[ ${_WATCH_DIR} =~ "anime" ]]; then
   FILEBOT_LABEL="Anime"
   LIBRARY_INDEX=1
-  OUTPUT_FOLDER="${_LOCAL_DATA}/videos/anime"
+  OUTPUT_FOLDER="${_LOCAL_DATA}/anime"
 fi
 
 echo "$(date +%Y-%m-%dT%H:%M:%S) | $0 $*"
