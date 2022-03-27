@@ -4,7 +4,7 @@ ENV GOPATH="/go"
 WORKDIR /app
 COPY rclone_generate_keys/main.go .
 RUN apk add --no-cache alpine-sdk
-RUN go get -d github.com/rclone/rclone/fs/config/obscure && \
+RUN go install github.com/rclone/rclone/fs/config/obscure && \
     go mod init obscure && \
     go mod tidy && \
     go build .
