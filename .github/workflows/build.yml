@@ -30,8 +30,8 @@ jobs:
           - image: "edifus/radarr"
             dockerfile: "radarr/Dockerfile"
 
-          - image: "edifus/rclone"
-            dockerfile: "rclone/Dockerfile"
+#          - image: "edifus/rclone"
+#            dockerfile: "rclone/Dockerfile"
 
           - image: "edifus/rclone_generate_keys"
             dockerfile: "rclone_generate_keys/Dockerfile"
