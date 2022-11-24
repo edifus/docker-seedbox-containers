@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-alpine:3.15-version-a0482dc2
+FROM ghcr.io/linuxserver/baseimage-alpine:3.17-version-0562b104
 
 LABEL maintainer="edifus"
 LABEL org.opencontainers.image.source https://github.com/edifus/docker-seedbox-containers
